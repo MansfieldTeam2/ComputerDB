@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cis2206.model.Computer;
-import cis2206.model.IComputerDAO;
+import Computer.model.Computer;
+import Computer.model.IComputerDAO;
 
 /**
  * ComputerDAO (Data Access Object) handles all interactions with the data
