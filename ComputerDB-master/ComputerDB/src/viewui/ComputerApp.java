@@ -34,7 +34,7 @@ public class ComputerApp {
                     System.out.println(comList.toString());
                     break;
                 case "2":
-                    number = Validator.getInt(sc, "New Computer Id: ");
+                    number = Validator.getInt(sc, "New Computer Number: ");
                     modelNumber = Validator.getLine(sc, "Model Number: ");
                     model = Validator.getLine(sc, "Model: ");
                     modelType = Validator.getLine(sc, "Model Type: ");
@@ -42,11 +42,11 @@ public class ComputerApp {
                     comList.createRecord(new Computer(number, modelNumber, model, modelType, cost));
                     break;
                 case "3":
-                    number = Validator.getInt(sc, "Computer ID to retrieve: ");
+                    number = Validator.getInt(sc, "Computer Number to retrieve: ");
                     System.out.println(comList.retrieveRecordById(number));
                     break;
                 case "4":
-                    number = Validator.getInt(sc, "Computer ID to update: ");
+                    number = Validator.getInt(sc, "Computer Number to update: ");
                     modelNumber = Validator.getLine(sc, "Model Number: ");
                     model = Validator.getLine(sc, "Model: ");
                     modelType = Validator.getLine(sc, "Model Type: ");
@@ -54,7 +54,7 @@ public class ComputerApp {
                     comList.updateRecord(new Computer(number, modelNumber, model, modelType, cost));
                     break;
                 case "5":
-                    number = Validator.getInt(sc, "Computer ID to delete: ");
+                    number = Validator.getInt(sc, "Computer Number to delete: ");
                     System.out.println(comList.retrieveRecordById(number));
                     String ok = Validator.getLine(sc, "Delete this record? (y/n) ", "^[yYnN]$");
                     if (ok.equalsIgnoreCase("Y")) {
