@@ -7,7 +7,7 @@ import Computer.model.datastore.mysql.ComputerDAO;
 
 public class ComputerApp {
 
-    IComputerDAO comList = new ComputerDAO();
+    IComputerDAO myList = new ComputerDAO();
     Scanner sc = new Scanner(System.in);
 
     public ComputerApp() {
@@ -15,7 +15,7 @@ public class ComputerApp {
     }
 
     private void menuLoop() {
-        int number;
+        int id;
         String modelNumber, model, modelType;
         double cost;
         String choice = "1";
@@ -31,34 +31,34 @@ public class ComputerApp {
 
             switch (choice) {
                 case "1":
-                    System.out.println(comList.toString());
+                    System.out.println(myList.toString());
                     break;
                 case "2":
-                    number = Validator.getInt(sc, "New Computer Id: ");
+                    id = Validator.getInt(sc, "New Computer Id: ");
                     modelNumber = Validator.getLine(sc, "Model Number: ");
                     model = Validator.getLine(sc, "Model: ");
                     modelType = Validator.getLine(sc, "Model Type: ");
                     cost = Validator.getDouble(sc, "Cost: ");
-                    comList.createRecord(new Computer(number, modelNumber, model, modelType, cost));
+                    myList.createRecord(new Computer(id, modelNumber, model, modelType, cost));
                     break;
                 case "3":
-                    number = Validator.getInt(sc, "Computer ID to retrieve: ");
-                    System.out.println(comList.retrieveRecordById(number));
+                    id = Validator.getInt(sc, "Computer Number to retrieve: ");
+                    System.out.println(myList.retrieveRecordById(id));
                     break;
                 case "4":
-                    number = Validator.getInt(sc, "Computer ID to update: ");
+                    id = Validator.getInt(sc, "Computer Number to update: ");
                     modelNumber = Validator.getLine(sc, "Model Number: ");
                     model = Validator.getLine(sc, "Model: ");
                     modelType = Validator.getLine(sc, "Model Type: ");
                     cost = Validator.getDouble(sc, "Cost: ");
-                    comList.updateRecord(new Computer(number, modelNumber, model, modelType, cost));
+                    myList.updateRecord(new Computer(id, modelNumber, model, modelType, cost));
                     break;
                 case "5":
-                    number = Validator.getInt(sc, "Computer ID to delete: ");
-                    System.out.println(comList.retrieveRecordById(number));
+                    id = Validator.getInt(sc, "Computer Number to delete: ");
+                    System.out.println(myList.retrieveRecordById(id));
                     String ok = Validator.getLine(sc, "Delete this record? (y/n) ", "^[yYnN]$");
                     if (ok.equalsIgnoreCase("Y")) {
-                        comList.deleteRecord(number);
+                        myList.deleteRecord(id);
                     }
                     break;
             }
@@ -70,5 +70,5 @@ public class ComputerApp {
      */
     public static void main(String[] args) {
         new ComputerApp();
-    }
+}
 }

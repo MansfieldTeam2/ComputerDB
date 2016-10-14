@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class DBConnection {
 
-    public static Connection getConnection() {
+	public static Connection getConnection() {
         Properties props = new Properties();
         Connection con = null;
         try {
@@ -25,7 +25,6 @@ public class DBConnection {
                     + "&useSSL=" + props.getProperty("USE_SSL"));
         } catch (IOException | ClassNotFoundException | SQLException e) {
             System.out.println("db error in getConnection()");
-            e.printStackTrace();
         }
         return con;
     }

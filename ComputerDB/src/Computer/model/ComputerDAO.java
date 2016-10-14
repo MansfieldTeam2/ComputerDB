@@ -24,15 +24,15 @@ public class ComputerDAO implements IComputerDAO {
     @Override
     public void createRecord(Computer computer) {
         final String QUERY = "insert into computer "
-                + "(compId, lastName, firstName, homePhone, salary) "
+                + "(id, modelNumber, model, modelType, cost) "
                 + "VALUES (null, ?, ?, ?, ?)";
 
         try (Connection con = DBConnection.getConnection(); 
                 PreparedStatement stmt = con.prepareStatement(QUERY);) {
-            stmt.setString(1, computer.getLastName());
-            stmt.setString(2, computer.getFirstName());
-            stmt.setString(3, computer.getHomePhone());
-            stmt.setDouble(4, computer.getSalary());
+            stmt.setString(1, computer.getModelNumber());
+            stmt.setString(2, computer.getModel());
+            stmt.setString(3, computer.getModelType());
+            stmt.setDouble(4, computer.getCost());
             if (DEBUG) {
                 System.out.println(stmt.toString());
             }
@@ -45,39 +45,41 @@ public class ComputerDAO implements IComputerDAO {
 
     @Override
     public Computer retrieveRecordById(int id) {
-        final String QUERY = "select compId, lastName, firstName, homePhone, "
-                + "salary from computer where compId = " + id;
-        Computer comp = null;
+        final String QUERY = "select id, modelNumber, model, modelType, "
+                + "cost from computer where number = " + id;
+        // final String QUERY = "select comId, modelNumber, model, modelType,
+        // cost from computer where comId = ?";
+        Computer com = null;
 
         try (Connection con = DBConnection.getConnection(); 
                 PreparedStatement stmt = con.prepareStatement(QUERY)) {
-            // stmt.setInt(1, id);
+            // stmt.setInt(1, number);
             if (DEBUG) {
                 System.out.println(stmt.toString());
             }
             ResultSet rs = stmt.executeQuery(QUERY);
 
             if (rs.next()) {
-                comp = new Computer(
-                        rs.getInt("compId"), 
-                        rs.getString("lastName"),
-                        rs.getString("firstName"),
-                        rs.getString("homePhone"), 
-                        rs.getDouble("salary"));
+                com = new Computer(
+                        rs.getInt("id"), 
+                        rs.getString("modelNumber"),
+                        rs.getString("model"),
+                        rs.getString("modelType"), 
+                        rs.getDouble("cost"));
             }
         } catch (SQLException ex) {
-            System.out.println("retrieveRecordById SQLException: " 
+            System.out.println("retrieveRecordByNumber SQLException: " 
                     + ex.getMessage());
         }
 
-        return comp;
+        return com;
     }
 
     @Override
     public List<Computer> retrieveAllRecords() {
         final List<Computer> myList = new ArrayList<>();
-        final String QUERY = "select compId, lastName, firstName, homePhone, "
-                + "salary from computer";
+        final String QUERY = "select id, modelNumber, model, modelType, "
+                + "cost from computer";
 
         try (Connection con = DBConnection.getConnection(); 
                 PreparedStatement stmt = con.prepareStatement(QUERY)) {
@@ -88,11 +90,11 @@ public class ComputerDAO implements IComputerDAO {
 
             while (rs.next()) {
                 myList.add(new Computer(
-                        rs.getInt("compId"), 
-                        rs.getString("lastName"), 
-                        rs.getString("firstName"),
-                        rs.getString("homePhone"), 
-                        rs.getDouble("salary")));
+                        rs.getInt("id"), 
+                        rs.getString("modelNumber"), 
+                        rs.getString("model"),
+                        rs.getString("modelType"), 
+                        rs.getDouble("cost")));
             }
         } catch (SQLException ex) {
             System.out.println("retrieveAllRecords SQLException: " + ex.getMessage());
@@ -103,16 +105,16 @@ public class ComputerDAO implements IComputerDAO {
 
     @Override
     public void updateRecord(Computer updatedComputer) {
-        final String QUERY = "update computer set lastName=?, firstName=?, "
-                + "homePhone=?, salary=? where compId=?";
+        final String QUERY = "update computer set ModelNumber=?, Model=?, "
+                + "modelType=?, cost=? where id=?";
 
         try (Connection con = DBConnection.getConnection(); 
                 PreparedStatement stmt = con.prepareStatement(QUERY)) {
-            stmt.setString(1, updatedComputer.getLastName());
-            stmt.setString(2, updatedComputer.getFirstName());
-            stmt.setString(3, updatedComputer.getHomePhone());
-            stmt.setDouble(4, updatedComputer.getSalary());
-            stmt.setInt(5, updatedComputer.getEmpId());
+            stmt.setString(1, updatedComputer.getModelNumber());
+            stmt.setString(2, updatedComputer.getModel());
+            stmt.setString(3, updatedComputer.getModelType());
+            stmt.setDouble(4, updatedComputer.getCost());
+            stmt.setInt(5, updatedComputer.geId());
             if (DEBUG) {
                 System.out.println(stmt.toString());
             }
@@ -123,12 +125,12 @@ public class ComputerDAO implements IComputerDAO {
     }
 
     @Override
-    public void deleteRecord(int id) {
-        final String QUERY = "delete from computer where compId = ?";
+    public void deleteRecord(int number) {
+        final String QUERY = "delete from employee where id = ?";
 
         try (Connection con = DBConnection.getConnection(); 
                 PreparedStatement stmt = con.prepareStatement(QUERY)) {
-            stmt.setInt(1, id);
+            stmt.setInt(1, number);
             if (DEBUG) {
                 System.out.println(stmt.toString());
             }
@@ -140,11 +142,11 @@ public class ComputerDAO implements IComputerDAO {
 
     @Override
     public void deleteRecord(Computer computer) {
-        final String QUERY = "delete from computer where compId = ?";
+        final String QUERY = "delete from computer where id = ?";
 
         try (Connection con = DBConnection.getConnection(); 
                 PreparedStatement stmt = con.prepareStatement(QUERY)) {
-            stmt.setInt(1, computer.getEmpId());
+            stmt.setInt(1, computer.geId());
             if (DEBUG) {
                 System.out.println(stmt.toString());
             }
@@ -157,12 +159,11 @@ public class ComputerDAO implements IComputerDAO {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
         for (Computer computer : retrieveAllRecords()) {
             sb.append(computer.toString()).append("\n");
         }
 
         return sb.toString();
-    }
+		
+	}
 }
-

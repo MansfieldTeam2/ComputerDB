@@ -2,22 +2,22 @@ package Computer.model;
 
 public class Computer {
 
-    private int number;
+    private int id;
     private String modelNumber;
     private String model;
     private String modelType;
     private double cost;
 
     public Computer() {
-        number = 0;
+        id = 0;
         modelNumber = "";
         model = "";
         modelType = "";
         cost = 0;
     }
 
-    public Computer(int number, String modelNumber, String modelName, String modelType, double cost) {
-        this.number = number;
+    public Computer(int id, String modelNumber, String modelName, String modelType, double cost) {
+        this.id = id;
         this.modelNumber = modelNumber;
         this.model = modelName;
         this.modelType = modelType;
@@ -32,12 +32,12 @@ public class Computer {
         this.model = model;
     }
 
-    public int getNumber() {
-        return number;
+    public int geId() {
+        return id;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getModelNumber() {
@@ -66,8 +66,7 @@ public class Computer {
 
     @Override
     public String toString() {
-        return String.format("%5d : %s, %s, %s, %.2f", this.getNumber(), this.getModel(),
+        return String.format("%5d : %s, %s, %s, %.2f", this.geId(), this.getModel(),
                 this.getModelNumber(), this.getModelType(), this.getCost());
     }
 }
-
