@@ -32,7 +32,7 @@ public class Computer {
         this.model = model;
     }
 
-    public int geId() {
+    public int getId() {
         return id;
     }
 
@@ -66,7 +66,7 @@ public class Computer {
 
     @Override
     public String toString() {
-        return String.format("%5d : %s, %s, %s, %.2f", this.geId(), this.getModel(),
+        return String.format("%5d : %s, %s, %s, %.2f", this.getId(), this.getModel(),
                 this.getModelNumber(), this.getModelType(), this.getCost());
     }
 }

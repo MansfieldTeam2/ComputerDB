@@ -27,6 +27,7 @@ public class ComputerDAO implements IComputerDAO {
             if (DEBUG) {
                 System.out.println(stmt.toString());
             }
+            
             stmt.executeUpdate();
 
         } catch (SQLException ex) {
@@ -37,8 +38,8 @@ public class ComputerDAO implements IComputerDAO {
     @Override
     public Computer retrieveRecordById(int id) {
         final String QUERY = "select id, modelNumber, model, modelType, "
-                + "cost from computer where number = " + id;
-        // final String QUERY = "select comId, modelNumber, model, modelType,
+                + "cost from computer where id = " + id;
+        // final String QUERY = "select Id, modelNumber, model, modelType,
         // cost from computer where comId = ?";
         Computer com = null;
 
@@ -105,7 +106,7 @@ public class ComputerDAO implements IComputerDAO {
             stmt.setString(2, updatedComputer.getModel());
             stmt.setString(3, updatedComputer.getModelType());
             stmt.setDouble(4, updatedComputer.getCost());
-            stmt.setInt(5, updatedComputer.geId());
+            stmt.setInt(5, updatedComputer.getId());
             if (DEBUG) {
                 System.out.println(stmt.toString());
             }
@@ -116,12 +117,12 @@ public class ComputerDAO implements IComputerDAO {
     }
 
     @Override
-    public void deleteRecord(int number) {
-        final String QUERY = "delete from employee where id = ?";
+    public void deleteRecord(int id) {
+        final String QUERY = "delete from computer where id = ?";
 
         try (Connection con = DBConnection.getConnection(); 
                 PreparedStatement stmt = con.prepareStatement(QUERY)) {
-            stmt.setInt(1, number);
+            stmt.setInt(1, id);
             if (DEBUG) {
                 System.out.println(stmt.toString());
             }
@@ -137,7 +138,7 @@ public class ComputerDAO implements IComputerDAO {
 
         try (Connection con = DBConnection.getConnection(); 
                 PreparedStatement stmt = con.prepareStatement(QUERY)) {
-            stmt.setInt(1, computer.geId());
+            stmt.setInt(1, computer.getId());
             if (DEBUG) {
                 System.out.println(stmt.toString());
             }
