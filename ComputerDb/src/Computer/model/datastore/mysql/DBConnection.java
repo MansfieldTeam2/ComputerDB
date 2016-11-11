@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.Properties;
 public class DBConnection {
 
+    /**
+     * This method connects to and checks the connection to the database.
+     * @return 
+     */
     public static Connection getConnection() {
         Properties props = new Properties();
         Connection con = null;

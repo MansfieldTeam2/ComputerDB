@@ -12,18 +12,23 @@ public class ComputerDAO implements IComputerDAO {
 
     protected final static boolean DEBUG = true;
 
+    /**
+     * This method creates a record within the database using the parameters input by the user.
+     * @param computer 
+     */
     @Override
     public void createRecord(Computer computer) {
         final String QUERY = "insert into computer "
                 + "(id, modelNumber, model, modelType, cost) "
-                + "VALUES (null, ?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection con = DBConnection.getConnection(); 
                 PreparedStatement stmt = con.prepareStatement(QUERY);) {
-            stmt.setString(1, computer.getModelNumber());
-            stmt.setString(2, computer.getModel());
-            stmt.setString(3, computer.getModelType());
-            stmt.setDouble(4, computer.getCost());
+            stmt.setInt(1, computer.getId());
+            stmt.setString(2, computer.getModelNumber());
+            stmt.setString(3, computer.getModel());
+            stmt.setString(4, computer.getModelType());
+            stmt.setDouble(5, computer.getCost());
             if (DEBUG) {
                 System.out.println(stmt.toString());
             }
@@ -35,6 +40,11 @@ public class ComputerDAO implements IComputerDAO {
         }
     }
 
+    /**
+     * This method returns a record based upon the ID entered by the user.
+     * @param id
+     * @return 
+     */
     @Override
     public Computer retrieveRecordById(int id) {
         final String QUERY = "select id, modelNumber, model, modelType, "
@@ -67,6 +77,10 @@ public class ComputerDAO implements IComputerDAO {
         return com;
     }
 
+    /**
+     * This method returns all records in the database and displays them.
+     * @return 
+     */
     @Override
     public List<Computer> retrieveAllRecords() {
         final List<Computer> myList = new ArrayList<>();
@@ -95,6 +109,10 @@ public class ComputerDAO implements IComputerDAO {
         return myList;
     }
 
+    /**
+     * This method allows the user to change an existing record.
+     * @param updatedComputer 
+     */
     @Override
     public void updateRecord(Computer updatedComputer) {
         final String QUERY = "update computer set ModelNumber=?, Model=?, "
@@ -116,6 +134,10 @@ public class ComputerDAO implements IComputerDAO {
         }
     }
 
+    /**
+     * This method allows the user to delete a record by ID.
+     * @param id 
+     */
     @Override
     public void deleteRecord(int id) {
         final String QUERY = "delete from computer where id = ?";
@@ -132,6 +154,10 @@ public class ComputerDAO implements IComputerDAO {
         }
     }
 
+    /**
+     * This method allows the user to delete a record by ID.
+     * @param id 
+     */
     @Override
     public void deleteRecord(Computer computer) {
         final String QUERY = "delete from computer where id = ?";
@@ -147,7 +173,171 @@ public class ComputerDAO implements IComputerDAO {
             System.out.println("deleteRecord SQLException: " + ex.getMessage());
         }
     }
+    
+    /**
+     * This method returns all records in the database and displays them in descending order by ID.
+     * @return 
+     */
+    @Override
+    public List<Computer> retrieveAllRecordsDesc() {
+        final List<Computer> myList2 = new ArrayList<>();
+        final String QUERY = "select id, modelNumber, model, modelType, "
+                + "cost from computer ORDER BY id DESC";
 
+        try (Connection con = DBConnection.getConnection(); 
+                PreparedStatement stmt = con.prepareStatement(QUERY)) {
+            if (DEBUG) {
+                System.out.println(stmt.toString());
+            }
+            ResultSet rs = stmt.executeQuery(QUERY);
+
+            while (rs.next()) {
+                myList2.add(new Computer(
+                        rs.getInt("id"), 
+                        rs.getString("modelNumber"), 
+                        rs.getString("model"),
+                        rs.getString("modelType"), 
+                        rs.getDouble("cost")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("retrieveAllRecordsDesc SQLException: " + ex.getMessage());
+        }
+
+        return myList2;
+    }
+    
+    /**
+     * This method returns all records in the database and displays them sorted alphabetically by model.
+     * @return 
+     */
+    @Override
+    public List<Computer> retrieveAllRecordsByModel() {
+        final List<Computer> myList3 = new ArrayList<>();
+        final String QUERY = "select id, modelNumber, model, modelType, "
+                + "cost from computer ORDER BY model";
+
+        try (Connection con = DBConnection.getConnection(); 
+                PreparedStatement stmt = con.prepareStatement(QUERY)) {
+            if (DEBUG) {
+                System.out.println(stmt.toString());
+            }
+            ResultSet rs = stmt.executeQuery(QUERY);
+
+            while (rs.next()) {
+                myList3.add(new Computer(
+                        rs.getInt("id"), 
+                        rs.getString("modelNumber"), 
+                        rs.getString("model"),
+                        rs.getString("modelType"), 
+                        rs.getDouble("cost")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("retrieveAllRecordsDesc SQLException: " + ex.getMessage());
+        }
+
+        return myList3;
+    }
+    
+    /**
+     * This method returns all records in the database and sorts them by model number.
+     * @return 
+     */
+    @Override
+    public List<Computer> retrieveAllRecordsByModelNumber() {
+        final List<Computer> myList3 = new ArrayList<>();
+        final String QUERY = "select id, modelNumber, model, modelType, "
+                + "cost from computer ORDER BY modelNumber";
+
+        try (Connection con = DBConnection.getConnection(); 
+                PreparedStatement stmt = con.prepareStatement(QUERY)) {
+            if (DEBUG) {
+                System.out.println(stmt.toString());
+            }
+            ResultSet rs = stmt.executeQuery(QUERY);
+
+            while (rs.next()) {
+                myList3.add(new Computer(
+                        rs.getInt("id"), 
+                        rs.getString("modelNumber"), 
+                        rs.getString("model"),
+                        rs.getString("modelType"), 
+                        rs.getDouble("cost")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("retrieveAllRecordsDesc SQLException: " + ex.getMessage());
+        }
+
+        return myList3;
+    }
+    
+    /**
+     * This method returns all records in the database and displays them sorted alphabetically by model type.
+     * @return 
+     */
+    @Override
+    public List<Computer> retrieveAllRecordsByModelType() {
+        final List<Computer> myList3 = new ArrayList<>();
+        final String QUERY = "select id, modelNumber, model, modelType, "
+                + "cost from computer ORDER BY modelType";
+
+        try (Connection con = DBConnection.getConnection(); 
+                PreparedStatement stmt = con.prepareStatement(QUERY)) {
+            if (DEBUG) {
+                System.out.println(stmt.toString());
+            }
+            ResultSet rs = stmt.executeQuery(QUERY);
+
+            while (rs.next()) {
+                myList3.add(new Computer(
+                        rs.getInt("id"), 
+                        rs.getString("modelNumber"), 
+                        rs.getString("model"),
+                        rs.getString("modelType"), 
+                        rs.getDouble("cost")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("retrieveAllRecordsDesc SQLException: " + ex.getMessage());
+        }
+
+        return myList3;
+    }
+    
+    /**
+     * This method returns all records in the databsse sorted by cost.
+     * @return 
+     */
+    @Override
+    public List<Computer> retrieveAllRecordsByCost() {
+        final List<Computer> myList3 = new ArrayList<>();
+        final String QUERY = "select id, modelNumber, model, modelType, "
+                + "cost from computer ORDER BY cost";
+
+        try (Connection con = DBConnection.getConnection(); 
+                PreparedStatement stmt = con.prepareStatement(QUERY)) {
+            if (DEBUG) {
+                System.out.println(stmt.toString());
+            }
+            ResultSet rs = stmt.executeQuery(QUERY);
+
+            while (rs.next()) {
+                myList3.add(new Computer(
+                        rs.getInt("id"), 
+                        rs.getString("modelNumber"), 
+                        rs.getString("model"),
+                        rs.getString("modelType"), 
+                        rs.getDouble("cost")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("retrieveAllRecordsDesc SQLException: " + ex.getMessage());
+        }
+
+        return myList3;
+    }
+    
+    /**
+     * This method returns records in the form of a string.
+     * @return 
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -1,4 +1,5 @@
 package Computer.viewui;
+
 import Validator.util.Validator;
 import java.util.Scanner;
 import Computer.model.Computer;
@@ -8,12 +9,19 @@ import Computer.model.datastore.mysql.ComputerDAO;
 public class ComputerApp {
 
     IComputerDAO myList = new ComputerDAO();
+    IComputerDAO myList2 = new ComputerDAO();
     Scanner sc = new Scanner(System.in);
 
+    /**
+     * A default ComputerApp constructor
+     */
     public ComputerApp() {
         menuLoop();
     }
 
+    /**
+     * This method is the loop that controls the user interface and displays all of the usable methods as well as executes them.
+     */
     private void menuLoop() {
         int id;
         String modelNumber, model, modelType;
@@ -27,7 +35,13 @@ public class ComputerApp {
             System.out.println("3 = Retrieve Record");
             System.out.println("4 = Update Record");
             System.out.println("5 = Delete Record");
-            choice = Validator.getLine(sc, "Number of choice: ", "^[0-5]$");
+            System.out.println("6 = List Records Descending");
+            System.out.println("7 = List Records by Model");
+            System.out.println("8 = List Records by ModelNumber");
+            System.out.println("9 = List Records by ModelType");
+            System.out.println("10 = List Records by Cost");
+            
+            choice = Validator.getLine(sc, "Number of choice: ", "^\\d+$");
 
             switch (choice) {
                 case "1":
@@ -60,6 +74,21 @@ public class ComputerApp {
                     if (ok.equalsIgnoreCase("Y")) {
                         myList.deleteRecord(id);
                     }
+                    break;
+                case "6":
+                    System.out.println(myList.retrieveAllRecordsDesc().toString());
+                    break;
+                case "7":
+                    System.out.println(myList.retrieveAllRecordsByModel().toString());
+                    break;
+                case "8":
+                    System.out.println(myList.retrieveAllRecordsByModelNumber().toString());
+                    break;
+                case "9":
+                    System.out.println(myList.retrieveAllRecordsByModelType().toString());
+                    break;
+                case "10":
+                    System.out.println(myList.retrieveAllRecordsByCost().toString());
                     break;
             }
         }

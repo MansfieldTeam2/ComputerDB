@@ -18,6 +18,16 @@ public interface IComputerDAO {
     void deleteRecord(int id);
 
     void deleteRecord(Computer computer);
+    
+    List<Computer> retrieveAllRecordsDesc();
+    
+    List<Computer> retrieveAllRecordsByModel();
+    
+    List<Computer> retrieveAllRecordsByModelNumber();
+    
+    List<Computer> retrieveAllRecordsByModelType();
+    
+    List<Computer> retrieveAllRecordsByCost();
 
     @Override
     String toString();
